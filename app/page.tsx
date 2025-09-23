@@ -9,7 +9,6 @@ import {
     Users,
     ExternalLink,
     HelpCircle,
-    Coffee,
     Heart,
 } from "lucide-react";
 import * as XLSX from "xlsx";
