@@ -96,9 +96,12 @@ const Home: React.FC = () => {
                 const workbook = XLSX.read(data, { type: "array" });
                 const sheetName = workbook.SheetNames[0];
                 const worksheet = workbook.Sheets[sheetName];
-                const jsonData: any[][] = XLSX.utils.sheet_to_json(worksheet, {
-                    header: 1,
-                });
+                const jsonData: string[][] = XLSX.utils.sheet_to_json(
+                    worksheet,
+                    {
+                        header: 1,
+                    }
+                );
 
                 // Skip header row and format data
                 const formattedData: CertificateData[] = jsonData
@@ -280,7 +283,7 @@ const Home: React.FC = () => {
     };
 
     // Versi baru: return Blob → dipakai buat ZIP
-    const generateCertificateBlob = (data: any): Promise<Blob> => {
+    const generateCertificateBlob = (data: CertificateData): Promise<Blob> => {
         return new Promise((resolve, reject) => {
             const canvas = document.createElement("canvas");
             generateCertificate(data, canvas);
@@ -298,6 +301,8 @@ const Home: React.FC = () => {
 
         for (let i = 0; i < excelData.length; i++) {
             const data = excelData[i];
+            console.log(data);
+
             try {
                 const blob = await generateCertificateBlob(data);
                 zip.file(`certificate_${data.nama || i + 1}.png`, blob, {
