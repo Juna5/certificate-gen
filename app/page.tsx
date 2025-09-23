@@ -17,7 +17,7 @@ import { saveAs } from "file-saver";
 import NextImage from "next/image";
 interface CertificateData {
     id: number;
-    nama: string;
+    name: string;
     remark1: string;
     remark2: string;
     remark3: string;
@@ -64,7 +64,7 @@ const Home: React.FC = () => {
 
     const downloadExcelSample = (): void => {
         const sampleData = [
-            ["Nama", "Remark 1", "Remark 2", "Remark 3"],
+            ["Name", "Remark 1", "Remark 2", "Remark 3"],
             ["John Doe", "Completed Course A", "With Distinction", ""],
             ["Jane Smith", "Completed Course B", "", ""],
         ];
@@ -108,7 +108,7 @@ const Home: React.FC = () => {
                     .slice(1)
                     .map((row, index) => ({
                         id: index + 1,
-                        nama: row[0] || "",
+                        name: row[0] || "",
                         remark1: row[1] || "",
                         remark2: row[2] || "",
                         remark3: row[3] || "",
@@ -229,7 +229,7 @@ const Home: React.FC = () => {
             ? `${nameFontSize}px ${nameFont}`
             : `bold ${nameFontSize}px Arial`;
         ctx.font = nameFontString;
-        ctx.fillText(data.nama || "", namePosition.x, namePosition.y);
+        ctx.fillText(data.name || "", namePosition.x, namePosition.y);
 
         // Remarks
         ctx.fillStyle = remarkColor;
@@ -274,7 +274,7 @@ const Home: React.FC = () => {
             const url = URL.createObjectURL(blob);
             const a = document.createElement("a");
             a.href = url;
-            a.download = `${filename || data.nama || "certificate"}.png`;
+            a.download = `${filename || data.name || "certificate"}.png`;
             document.body.appendChild(a);
             a.click();
             document.body.removeChild(a);
@@ -290,7 +290,7 @@ const Home: React.FC = () => {
 
             canvas.toBlob((blob) => {
                 if (blob) resolve(blob);
-                else reject(new Error("Gagal membuat blob dari canvas"));
+                else reject(new Error("Failed to create blob from canvas"));
             }, "image/png");
         });
     };
@@ -305,11 +305,11 @@ const Home: React.FC = () => {
 
             try {
                 const blob = await generateCertificateBlob(data);
-                zip.file(`certificate_${data.nama || i + 1}.png`, blob, {
+                zip.file(`certificate_${data.name || i + 1}.png`, blob, {
                     binary: true,
                 });
             } catch (err) {
-                console.error("Gagal generate certificate:", err);
+                console.error("Failed to generate certificate:", err);
             }
         }
 
@@ -453,7 +453,7 @@ const Home: React.FC = () => {
                                     className="hidden"
                                 />
                                 <p className="text-xs text-gray-500 mt-1">
-                                    Upload gambar certificate kosong (PNG, JPG,
+                                    Upload a blank certificate image (PNG, JPG,
                                     etc.)
                                 </p>
                             </div>
@@ -487,7 +487,7 @@ const Home: React.FC = () => {
                                     className="hidden"
                                 />
                                 <p className="text-xs text-gray-500 mt-1">
-                                    Format: Nama, Remark 1, Remark 2, Remark 3
+                                    Format: Name, Remark 1, Remark 2, Remark 3
                                 </p>
                             </div>
 
@@ -500,7 +500,7 @@ const Home: React.FC = () => {
                                 {/* Name Position */}
                                 <div className="space-y-2 mb-4">
                                     <label className="text-xs font-medium text-gray-600">
-                                        Posisi Nama
+                                        Name Position
                                     </label>
                                     <div className="grid grid-cols-2 gap-2">
                                         <div>
@@ -555,7 +555,7 @@ const Home: React.FC = () => {
                                         className="space-y-2 mb-3"
                                     >
                                         <label className="text-xs font-medium text-gray-600">
-                                            Posisi Remark {index + 1}
+                                            Remark {index + 1} Position
                                         </label>
                                         <div className="grid grid-cols-2 gap-2">
                                             <div>
@@ -627,7 +627,7 @@ const Home: React.FC = () => {
                             <div className="space-y-4">
                                 <div>
                                     <label className="block text-sm font-medium text-gray-700 mb-2">
-                                        Font Size Nama: {nameFontSize}px
+                                        Name Font Size: {nameFontSize}px
                                     </label>
                                     <input
                                         type="range"
@@ -644,7 +644,7 @@ const Home: React.FC = () => {
                                 </div>
                                 <div>
                                     <label className="block text-sm font-medium text-gray-700 mb-2">
-                                        Warna Nama
+                                        Name Color
                                     </label>
                                     <div className="flex items-center space-x-3">
                                         <input
@@ -680,7 +680,7 @@ const Home: React.FC = () => {
                                 </div>
                                 <div>
                                     <label className="block text-sm font-medium text-gray-700 mb-2">
-                                        Warna Remark
+                                        Remark Color
                                     </label>
                                     <div className="flex items-center space-x-3">
                                         <input
@@ -702,7 +702,7 @@ const Home: React.FC = () => {
                             <div className="space-y-4">
                                 <div>
                                     <label className="block text-sm font-medium text-gray-700 mb-2">
-                                        Font untuk Nama
+                                        Font for Name
                                     </label>
                                     <button
                                         onClick={() =>
@@ -726,7 +726,7 @@ const Home: React.FC = () => {
 
                                 <div>
                                     <label className="block text-sm font-medium text-gray-700 mb-2">
-                                        Font untuk Remark
+                                        Font for Remarks
                                     </label>
                                     <button
                                         onClick={() =>
@@ -789,7 +789,7 @@ const Home: React.FC = () => {
                                 </button>
                             </div>
                             <p className="text-xs text-blue-600 mt-2">
-                                Download contoh file untuk memulai dengan cepat
+                                Download sample files to get started quickly
                             </p>
                         </div>
                         {showPreview && certificateTemplate ? (
@@ -881,10 +881,10 @@ const Home: React.FC = () => {
                                 </h3>
                                 <p className="text-gray-500 mb-4">
                                     {!certificateTemplate && !excelData.length
-                                        ? "Upload certificate template dan Excel file untuk mulai"
+                                        ? "Upload a certificate template and an Excel file to start"
                                         : !certificateTemplate
-                                        ? "Upload certificate template untuk melanjutkan"
-                                        : "Upload Excel file untuk melanjutkan"}
+                                        ? "Upload a certificate template to continue"
+                                        : "Upload an Excel file to continue"}
                                 </p>
                                 <div className="space-y-2 text-sm text-gray-400">
                                     <div
