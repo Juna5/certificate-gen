@@ -106,6 +106,7 @@ const Home: React.FC = () => {
                 // Skip header row and format data
                 const formattedData: CertificateData[] = jsonData
                     .slice(1)
+                    .filter((row) => row[0])
                     .map((row, index) => ({
                         id: index + 1,
                         name: row[0] || "",
