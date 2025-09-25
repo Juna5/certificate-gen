@@ -826,7 +826,7 @@ const Home: React.FC = () => {
 
                                     <div className="text-sm text-gray-600">
                                         <strong>
-                                            {excelData[currentPreview]?.nama ||
+                                            {excelData[currentPreview]?.name ||
                                                 "No Name"}
                                         </strong>
                                     </div>
